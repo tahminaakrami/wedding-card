@@ -1,92 +1,98 @@
-// 1. Open and close the envelope
 
+const intro = document.getElementById("intro");
+const invitation = document.getElementById("invitation");
 const envelope = document.getElementById("envelope");
-const openBtn = document.getElementById("openBtn");
-const hint = document.getElementById("hint");
-const replay = document.getElementById("replay");
+const reopen = document.getElementById("reopen");
 
-openBtn.addEventListener("click", function () {
-  envelope.classList.add("open");
+// Open the invitation
+function openInvitation() {
+  if (intro.classList.contains("opening")) return;
 
-  hint.textContent = "A LITTLE ENVELOPE, A LIFETIME OF LOVE";
+  intro.classList.add("opening");
 
-  replay.hidden = false;
-});
+  setTimeout(() => {
+    intro.classList.add("hide");
+    invitation.classList.add("visible");
 
-replay.addEventListener("click", function () {
-  envelope.classList.remove("open");
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }, 1300);
+}
 
-  hint.textContent = "TOUCH THE GOLDEN SEAL TO UNVEIL YOUR INVITATION";
+envelope.addEventListener("click", openInvitation);
 
-  replay.hidden = true;
-});
-
-
-// 2. Countdown timer
-
-// Month 9 means October in JavaScript.
-
-const weddingDate = new Date(2026, 9, 30, 17, 0, 0);
-
-function updateCountdown() {
-  const remaining = Math.max(
-    0,
-    weddingDate.getTime() - Date.now()
-  );
-
-  const values = {
-    days: Math.floor(remaining / 86400000),
-
-    hours: Math.floor(
-      (remaining / 3600000) % 24
-    ),
-
-    minutes: Math.floor(
-      (remaining / 60000) % 60
-    ),
-
-    seconds: Math.floor(
-      (remaining / 1000) % 60
-    )
-  };
-
-  for (const unit in values) {
-    document.getElementById(unit).textContent =
-      String(values[unit]).padStart(2, "0");
+// Open using the keyboard
+envelope.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openInvitation();
   }
+});
+
+// Return to the envelope
+reopen.addEventListener("click", () => {
+  invitation.classList.remove("visible");
+  intro.classList.remove("hide", "opening");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+// Change this to your actual wedding date
+const weddingDate = new Date(
+  "2026-11-20T18:00:00+04:30"
+);
+
+const dateText = document.getElementById("eventDateText");
+
+if (!Number.isNaN(weddingDate.getTime())) {
+  dateText.textContent = weddingDate.toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "Asia/Kabul"
+    }
+  );
+}
+
+// Wedding countdown
+function updateCountdown() {
+  const now = Date.now();
+  const difference = weddingDate.getTime() - now;
+
+  if (Number.isNaN(difference)) return;
+
+  if (difference <= 0) {
+    ["days", "hours", "minutes", "seconds"].forEach((id) => {
+      document.getElementById(id).textContent = "00";
+    });
+
+    dateText.textContent = "Our special day has arrived!";
+    return;
+  }
+
+  const days = Math.floor(difference / 86400000);
+  const hours = Math.floor((difference / 3600000) % 24);
+  const minutes = Math.floor((difference / 60000) % 60);
+  const seconds = Math.floor((difference / 1000) % 60);
+
+  document.getElementById("days").textContent = days;
+
+  document.getElementById("hours").textContent =
+    String(hours).padStart(2, "0");
+
+  document.getElementById("minutes").textContent =
+    String(minutes).padStart(2, "0");
+
+  document.getElementById("seconds").textContent =
+    String(seconds).padStart(2, "0");
 }
 
 updateCountdown();
-
 setInterval(updateCountdown, 1000);
-
-
-// 3. RSVP form
-
-// This is a demo. It does not save information
-// to a database or send it to an email.
-
-const rsvpForm = document.getElementById("rsvpForm");
-
-const responseMessage =
-  document.getElementById("responseMessage");
-
-rsvpForm.addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const guestName =
-    document.getElementById("guestName").value.trim();
-
-  const attendance =
-    document.getElementById("attendance").value;
-
-  const guestCount =
-    document.getElementById("guestCount").value;
-
-  if (!guestName || !attendance) return;
-
-  responseMessage.textContent =
-    `Thank you, ${guestName}! ${attendance}. Guests: ${guestCount}.`;
-
-  rsvpForm.reset();
-});
