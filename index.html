@@ -4,132 +4,190 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#21120f">
   <title>Neda & Ali | Wedding Invitation</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
 
-  <!-- Envelope -->
-  <section class="intro" id="intro">
-    <div class="envelope-wrap">
-      <p class="intro-title">A Special Invitation</p>
+  <!-- COVER / ENVELOPE -->
+  <main>
+    <section class="cover" id="cover">
+      <div class="cover-glow"></div>
 
-      <div class="envelope" id="envelope"
-           role="button" tabindex="0"
-           aria-label="Open wedding invitation">
-        <div class="envelope-names">
-          <span class="script">Neda</span>
-          <span class="and">&</span>
-          <span class="script">Ali</span>
-        </div>
+      <div class="envelope-scene">
+        <p class="cover-eyebrow">A SPECIAL INVITATION</p>
 
-        <div class="envelope-flap"></div>
-        <div class="seal">N & A</div>
-      </div>
+        <button
+          class="envelope"
+          id="openInvitation"
+          type="button"
+          aria-label="Open Neda and Ali's wedding invitation"
+        >
+          <span class="envelope-liner"></span>
 
-      <p class="open-hint">✦ TAP TO OPEN ✦</p>
-    </div>
-  </section>
+          <span class="envelope-names">
+            <span>Neda</span>
+            <i>&amp;</i>
+            <span>Ali</span>
+          </span>
 
-  <!-- Invitation -->
-  <main class="invitation" id="invitation">
-    <div class="paper">
+          <span class="flap-back"></span>
+          <span class="flap-front"></span>
 
-      <div class="ornament">❦ ✧ ❦</div>
+          <span class="corner-flower flower-one">❧</span>
+          <span class="corner-flower flower-two">❧</span>
+          <span class="corner-flower flower-three">❧</span>
+          <span class="corner-flower flower-four">❧</span>
 
-      <p class="small-heading">
-        Together with their families<br>
-        joyfully invite you to celebrate
-      </p>
+          <span class="wax-seal">
+            <span class="seal-flower">✿</span>
+            <span class="seal-monogram">N <i>&amp;</i> A</span>
+          </span>
+        </button>
 
-      <h1>Neda</h1>
-      <span class="ampersand">&</span>
-      <h1>Ali</h1>
-
-      <div class="divider"></div>
-
-      <p class="message">
-        With love in our hearts and joy in our souls,
-        we invite you to share the beginning of our
-        beautiful journey together.
-      </p>
-
-      <div class="section">
-        <h2>Our Wedding Day</h2>
-        <p class="detail">
-          A beautiful day to remember,<br>
-          a new chapter to begin.
+        <p class="tap-hint">
+          <span class="hint-star">✦</span>
+          TOUCH THE SEAL TO OPEN
+          <span class="hint-star">✦</span>
         </p>
       </div>
+    </section>
 
-      <div class="divider"></div>
+    <!-- WEDDING CARD -->
+    <section class="invitation" id="invitation" aria-hidden="true">
+      <div class="card-wrap">
+        <article class="wedding-card">
 
-      <div class="section">
-        <h2>Save the Date</h2>
-        <p class="detail" id="eventDateText">
-          Date to be announced
-        </p>
+          <div class="card-corner top-left">❧</div>
+          <div class="card-corner top-right">❧</div>
+          <div class="card-corner bottom-left">❧</div>
+          <div class="card-corner bottom-right">❧</div>
 
-        <div class="countdown">
-          <div class="time-box">
-            <span id="days">00</span>
-            <small>Days</small>
+          <div class="card-content">
+
+            <div class="floral-divider">
+              <span>✧</span> ❦ <span>✧</span>
+            </div>
+
+            <p class="invitation-label">
+              TOGETHER WITH THEIR FAMILIES
+            </p>
+
+            <p class="invitation-intro">
+              Request the pleasure of your company
+              as they celebrate their wedding
+            </p>
+
+            <h1 class="person-name">Neda</h1>
+            <div class="name-ampersand">&amp;</div>
+            <h1 class="person-name">Ali</h1>
+
+            <div class="gold-line">
+              <span>✦</span>
+            </div>
+
+            <p class="love-message">
+              Two hearts, one love, one beautiful
+              beginning. Your presence will make
+              our special day unforgettable.
+            </p>
+
+            <section class="card-section">
+              <p class="section-kicker">PLEASE JOIN US FOR</p>
+              <h2>Our Wedding Celebration</h2>
+              <p class="body-copy">
+                A day of love, joy and new beginnings
+              </p>
+            </section>
+
+            <section class="card-section date-section">
+              <div class="mini-flower">❀</div>
+              <p class="section-kicker">SAVE THE DATE</p>
+              <p class="event-date" id="eventDate">
+                Date to be announced
+              </p>
+
+              <div class="countdown" id="countdown">
+                <div class="time-unit">
+                  <span id="days">00</span>
+                  <small>DAYS</small>
+                </div>
+                <span class="time-colon">:</span>
+                <div class="time-unit">
+                  <span id="hours">00</span>
+                  <small>HOURS</small>
+                </div>
+                <span class="time-colon">:</span>
+                <div class="time-unit">
+                  <span id="minutes">00</span>
+                  <small>MINS</small>
+                </div>
+                <span class="time-colon">:</span>
+                <div class="time-unit">
+                  <span id="seconds">00</span>
+                  <small>SECS</small>
+                </div>
+              </div>
+            </section>
+
+            <section class="card-section ceremony-section">
+              <p class="section-kicker">THE CEREMONY</p>
+              <h2>Time &amp; Place</h2>
+
+              <div class="detail-block">
+                <span class="detail-icon">◷</span>
+                <p class="detail-title">CEREMONY TIME</p>
+                <p class="ceremony-hour" id="ceremonyTime">
+                  6:00 PM
+                </p>
+              </div>
+
+              <div class="detail-block">
+                <span class="detail-icon">✧</span>
+                <p class="detail-title">WEDDING LOCATION</p>
+                <p class="location-name">Kabul, Afghanistan</p>
+                <p class="body-copy">
+                  Venue details to be announced
+                </p>
+
+                <a
+                  class="map-button"
+                  href="https://www.google.com/maps/search/?api=1&query=Kabul%2C%20Afghanistan"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  VIEW ON MAP
+                </a>
+              </div>
+            </section>
+
+            <div class="floral-divider ending-divider">
+              ❦ <span>✧</span> ❦
+            </div>
+
+            <p class="thank-you">
+              We can't wait to celebrate with you
+            </p>
+
+            <p class="signature">With love</p>
+            <p class="signature-names">Neda &amp; Ali</p>
+
           </div>
-          <div class="time-box">
-            <span id="hours">00</span>
-            <small>Hours</small>
-          </div>
-          <div class="time-box">
-            <span id="minutes">00</span>
-            <small>Minutes</small>
-          </div>
-          <div class="time-box">
-            <span id="seconds">00</span>
-            <small>Seconds</small>
-          </div>
-        </div>
+        </article>
+
+        <button class="back-button" id="backToEnvelope" type="button">
+          ← Back to the envelope
+        </button>
       </div>
-
-      <div class="section">
-        <h2>Wedding Celebration</h2>
-
-        <p class="detail">
-          <strong>Location</strong><br>
-          Kabul, Afghanistan
-        </p>
-
-        <div class="location-card">
-          <p class="detail">
-            We look forward to celebrating<br>
-            this special day with you.
-          </p>
-
-          <a class="map-link"
-             href="https://www.google.com/maps/search/?api=1&query=Kabul%2C%20Afghanistan"
-             target="_blank"
-             rel="noopener noreferrer">
-            VIEW LOCATION
-          </a>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <p class="message">
-        Your presence will make our day<br>
-        even more special.
-      </p>
-
-      <div class="footer">With love, Neda & Ali</div>
-      <div class="ornament bottom-ornament">❦</div>
-
-    </div>
-
-    <button class="reopen" id="reopen">
-      Back to the envelope
-    </button>
+    </section>
   </main>
 
-  <script src="script.js"></script>
 </body>
 </html>

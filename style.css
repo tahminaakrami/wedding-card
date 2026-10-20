@@ -1,209 +1,364 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --dark: #1b100d;
+  --brown: #382019;
+  --brown-light: #593629;
+  --cream: #fbf2e2;
+  --cream-dark: #ead8bb;
+  --gold: #c7a16a;
+  --gold-light: #f0d7a4;
+  --ink: #634431;
+  --wax: #a96843;
 }
 
-:root {
-  --cream: #f8efdf;
-  --gold: #c8a365;
-  --brown: #281713;
-  --dark: #160e0c;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
   background: var(--dark);
+  font-family: "Cormorant Garamond", Georgia, serif;
   color: var(--cream);
-  font-family: 'Cormorant Garamond', serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
   font: inherit;
 }
 
-/* ENVELOPE SCREEN */
+/* COVER */
 
-.intro {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 15px;
-  background: radial-gradient(
-    ellipse at center,
-    #593b2c,
-    #160e0c 75%
-  );
+.cover {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  padding: 35px 18px;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 48%, #513526 0%, transparent 47%),
+    linear-gradient(135deg, #291713, #130b09 75%);
 }
 
-.envelope-wrap {
-  width: min(340px, 90vw);
+.cover::before,
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid #b9955b40;
+  pointer-events: none;
+}
+
+.cover::after {
+  inset: 25px;
+  border-color: #c9a36c20;
+}
+
+.cover-glow {
+  position: absolute;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: #c99b4c0d;
+  filter: blur(35px);
+  pointer-events: none;
+}
+
+.envelope-scene {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
   text-align: center;
 }
 
-.intro-title {
-  font-size: 15px;
-  letter-spacing: 4px;
-  color: #e6d1a7;
-  margin-bottom: 35px;
-  text-transform: uppercase;
+.cover-eyebrow {
+  margin-bottom: 30px;
+  color: var(--gold-light);
+  font-size: 11px;
+  letter-spacing: 5px;
 }
 
 .envelope {
   position: relative;
-  height: 440px;
-  max-height: 65vh;
-  min-height: 350px;
-  background: linear-gradient(140deg, #603b2d, #291612 70%);
-  border: 1px solid #987447;
-  box-shadow: 0 15px 60px #0009;
-  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 455px;
+  max-height: 65svh;
+  min-height: 360px;
   overflow: hidden;
   isolation: isolate;
-  perspective: 1000px;
+  cursor: pointer;
+  border: 1px solid #bc965e;
+  border-radius: 2px;
+  background:
+    radial-gradient(ellipse at 0% 0%, #78513a 0%, transparent 42%),
+    linear-gradient(135deg, #4a2b20, #21110e 72%);
+  box-shadow:
+    0 30px 75px #0008,
+    inset 0 0 35px #0e070640;
 }
 
-.envelope::before,
-.envelope::after {
+.envelope:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 6px;
+}
+
+.envelope::before {
   content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(148deg, transparent 49.7%, #c7a16a80 50%, transparent 50.5%),
+    linear-gradient(32deg, transparent 49.7%, #c7a16a65 50%, transparent 50.5%);
+}
+
+.envelope-liner {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 25%, #d7b77c20 0 1px, transparent 2px),
+    radial-gradient(circle at 85% 70%, #d7b77c20 0 1px, transparent 2px);
+}
+
+.envelope-names {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #f0d5a2;
+  font-family: "Great Vibes", cursive;
+  font-size: 55px;
+  line-height: 1.05;
+}
+
+.envelope-names i {
+  font-size: 23px;
+  font-style: normal;
+  font-family: "Cormorant Garamond", serif;
+  color: var(--gold);
+}
+
+/* FLAPS */
+
+.flap-back,
+.flap-front {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.envelope::before {
-  background:
-    linear-gradient(145deg, transparent 49.7%, #a78354 50%, transparent 50.5%),
-    linear-gradient(35deg, transparent 49.7%, #a78354 50%, transparent 50.5%);
-  opacity: .75;
-}
-
-.envelope::after {
-  background:
-    radial-gradient(ellipse at 20% 80%, #b18a4b20, transparent 40%),
-    radial-gradient(ellipse at 80% 15%, #d6ad6830, transparent 45%);
-}
-
-.envelope-flap {
-  position: absolute;
-  z-index: 3;
-  inset: 0 0 auto;
-  height: 53%;
-  background: linear-gradient(145deg, #744a38, #40241c);
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+.flap-back {
+  z-index: 2;
+  background: linear-gradient(135deg, #63412e, #382018);
+  clip-path: polygon(0 0, 100% 0, 50% 51%);
   transform-origin: top center;
   transition: transform 1s ease, opacity .8s ease;
-  border-top: 1px solid #c2a16d;
+  border-bottom: 1px solid #c4a16b;
 }
 
-.seal {
+.flap-front {
+  z-index: 2;
+  background: linear-gradient(145deg, #593727, #27140f);
+  clip-path: polygon(0 100%, 0 0, 50% 52%, 100% 0, 100% 100%);
+  opacity: .93;
+}
+
+/* CORNER FLOWERS */
+
+.corner-flower {
+  position: absolute;
+  z-index: 3;
+  color: #c7a16a;
+  font-family: Georgia, serif;
+  font-size: 53px;
+  opacity: .86;
+  pointer-events: none;
+  text-shadow: 0 0 12px #d9b77b25;
+}
+
+.flower-one {
+  top: 9px;
+  left: 8px;
+  transform: rotate(-35deg);
+}
+
+.flower-two {
+  top: 9px;
+  right: 8px;
+  transform: scaleX(-1) rotate(-35deg);
+}
+
+.flower-three {
+  bottom: 8px;
+  left: 8px;
+  transform: rotate(145deg);
+}
+
+.flower-four {
+  bottom: 8px;
+  right: 8px;
+  transform: scaleX(-1) rotate(145deg);
+}
+
+/* WAX SEAL */
+
+.wax-seal {
   position: absolute;
   z-index: 5;
-  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 75px;
-  height: 75px;
-  border-radius: 50%;
+  top: 50%;
+  width: 104px;
+  height: 104px;
   display: grid;
   place-items: center;
-  color: #fff0c9;
-  font-family: 'Great Vibes', cursive;
-  font-size: 26px;
-  background: radial-gradient(circle, #d6b579, #936632 70%);
-  border: 3px double #f0d9a4;
-  box-shadow: 0 4px 15px #0008;
-  transition: opacity .5s ease, transform .6s ease;
+  border: 2px solid #e2bb83;
+  border-radius: 44% 50% 45% 53% / 48% 43% 55% 50%;
+  transform: translate(-50%, -50%) rotate(-5deg);
+  color: #fff0ce;
+  background:
+    radial-gradient(circle at 30% 25%, #dba67b 0%, transparent 40%),
+    radial-gradient(circle at 60% 70%, #79442d 0%, #ad6c43 48%, #8b5034 100%);
+  box-shadow:
+    0 0 0 4px #a9744c35,
+    0 0 0 6px #d1a16c25,
+    0 7px 18px #0008,
+    inset 0 0 0 3px #f1d0a333;
+  transition:
+    opacity .55s ease,
+    transform .8s ease,
+    box-shadow .6s ease;
 }
 
-.envelope-names {
+.seal-flower {
   position: absolute;
+  font-size: 93px;
+  color: #f0cc95;
+  opacity: .24;
+  line-height: 1;
+}
+
+.seal-monogram {
+  position: relative;
   z-index: 1;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  color: #e7c994;
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 23px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+  transform: rotate(5deg);
+  text-shadow: 0 1px 2px #6e3e29;
 }
 
-.envelope-names .script {
-  font-family: 'Great Vibes', cursive;
-  font-size: 49px;
+.seal-monogram i {
+  font-size: 15px;
+  font-style: normal;
 }
 
-.envelope-names .and {
-  font-size: 17px;
-  letter-spacing: 5px;
+/* HINT */
+
+.tap-hint {
+  margin-top: 29px;
+  font-size: 10px;
+  letter-spacing: 2.6px;
+  color: #e3cba4;
+  animation: hintPulse 2s infinite;
 }
 
-.open-hint {
-  margin-top: 26px;
-  color: #ddc8a5;
-  font-size: 14px;
-  letter-spacing: 2px;
-  animation: pulse 1.8s infinite;
+.hint-star {
+  color: var(--gold);
+  padding: 0 5px;
 }
 
-@keyframes pulse {
-  50% {
-    opacity: .45;
-  }
+@keyframes hintPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .48; }
 }
 
 /* OPEN ANIMATION */
 
-.intro.opening .envelope-flap {
+.cover.opening .flap-back {
   transform: rotateX(180deg);
   opacity: 0;
 }
 
-.intro.opening .seal {
+.cover.opening .wax-seal {
   opacity: 0;
-  transform: translate(-50%, -50%) scale(1.5);
+  transform: translate(-50%, -50%) rotate(25deg) scale(1.8);
+  box-shadow: 0 0 70px #f1c76a;
 }
 
-.intro.opening .envelope {
-  animation: envelopeGlow 1.4s ease forwards;
+.cover.opening .envelope {
+  animation: envelopeLight 1.5s ease forwards;
 }
 
-@keyframes envelopeGlow {
-  50% {
-    box-shadow: 0 0 70px #d4a64e99;
+@keyframes envelopeLight {
+  40% {
+    box-shadow:
+      0 0 35px #d7a34e,
+      0 0 100px #d7a34e88;
+  }
+
+  100% {
+    box-shadow: 0 0 70px #d7a34e50;
   }
 }
 
-.intro.hide {
+.cover.leaving {
+  animation: coverLeave 1s ease forwards;
+  pointer-events: none;
+}
+
+@keyframes coverLeave {
+  to {
+    opacity: 0;
+    transform: scale(1.04);
+    visibility: hidden;
+  }
+}
+
+.cover.hidden {
   display: none;
 }
 
-/* INVITATION CARD */
+/* INVITATION */
 
 .invitation {
   display: none;
-  min-height: 100vh;
-  padding: 25px 15px 60px;
+  min-height: 100svh;
+  padding: 35px 15px 55px;
+  color: var(--ink);
   background:
-    radial-gradient(ellipse at top, #795b4433, transparent 55%),
-    var(--cream);
-  color: #563b2e;
+    radial-gradient(ellipse at 50% 0%, #c8a16a30, transparent 45%),
+    #21130f;
 }
 
 .invitation.visible {
   display: block;
-  animation: reveal 1.3s ease both;
+  animation: cardAppear 1.2s ease both;
 }
 
-@keyframes reveal {
+@keyframes cardAppear {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(22px);
   }
 
   to {
@@ -212,172 +367,386 @@ button {
   }
 }
 
-.paper {
+.card-wrap {
+  width: min(100%, 560px);
+  margin: auto;
+}
+
+.wedding-card {
   position: relative;
-  max-width: 540px;
-  margin: auto;
-  padding: 45px 24px;
+  padding: 12px;
+  border: 1px solid #c9a36a;
+  background: #e9d6b8;
+  box-shadow: 0 25px 65px #0005;
+}
+
+.wedding-card::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border: 1px solid #ad8752;
+  pointer-events: none;
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  padding: 46px 27px 38px;
   text-align: center;
-  border: 1px solid #c9aa77;
-  outline: 1px solid #c9aa77;
-  outline-offset: -8px;
+  overflow: hidden;
   background:
-    radial-gradient(ellipse at top left, #e7d3b1 0, transparent 30%),
-    radial-gradient(ellipse at bottom right, #e8d4b7 0, transparent 35%),
-    #fbf3e5;
-  box-shadow: 0 15px 45px #3923181c;
+    radial-gradient(ellipse at 0 0, #e3cba533, transparent 35%),
+    radial-gradient(ellipse at 100% 100%, #e3cba533, transparent 35%),
+    var(--cream);
 }
 
-.ornament {
-  color: #b58b4f;
-  font-size: 26px;
-  letter-spacing: 8px;
-  margin-bottom: 20px;
+.card-corner {
+  position: absolute;
+  z-index: 2;
+  color: #a67c4a;
+  font-size: 70px;
+  line-height: 1;
+  pointer-events: none;
+  opacity: .82;
 }
 
-.small-heading {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  line-height: 2;
+.top-left {
+  top: 12px;
+  left: 14px;
 }
 
-.paper h1 {
-  font-family: 'Great Vibes', cursive;
-  font-weight: 400;
-  font-size: clamp(48px, 12vw, 72px);
-  line-height: 1.25;
-  color: #694431;
-  margin: 20px 0 5px;
+.top-right {
+  top: 12px;
+  right: 14px;
+  transform: scaleX(-1);
 }
 
-.ampersand {
-  display: block;
-  color: #bc945b;
-  font-family: 'Great Vibes', cursive;
-  font-size: 45px;
+.bottom-left {
+  bottom: 12px;
+  left: 14px;
+  transform: rotate(180deg);
 }
 
-.divider {
-  width: 100px;
-  height: 1px;
-  background: #b99a6b;
-  margin: 25px auto;
+.bottom-right {
+  bottom: 12px;
+  right: 14px;
+  transform: rotate(180deg) scaleX(-1);
 }
 
-.message {
-  font-size: 18px;
-  line-height: 1.9;
-  max-width: 380px;
-  margin: auto;
+.floral-divider {
+  margin-bottom: 25px;
+  font-size: 27px;
+  color: #b08a53;
+  letter-spacing: 5px;
 }
 
-.section {
-  padding: 25px 0;
+.floral-divider span {
+  font-size: 16px;
+  vertical-align: middle;
 }
 
-.section h2 {
-  font-family: 'Great Vibes', cursive;
-  font-size: 38px;
-  font-weight: 400;
-  color: #79543c;
-  margin-bottom: 12px;
-}
-
-.detail {
-  font-size: 19px;
+.invitation-label,
+.section-kicker {
+  font-size: 10px;
+  letter-spacing: 2.5px;
   line-height: 1.8;
+  color: #8a6b48;
 }
 
-.detail strong {
-  font-weight: 600;
-  letter-spacing: 1px;
+.invitation-intro {
+  max-width: 330px;
+  margin: 15px auto 22px;
+  font-size: 17px;
+  line-height: 1.7;
 }
+
+.person-name {
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(57px, 12vw, 78px);
+  font-weight: 400;
+  line-height: 1.12;
+  color: #704a32;
+}
+
+.name-ampersand {
+  margin: 4px 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 41px;
+  color: #b68c51;
+}
+
+.gold-line {
+  position: relative;
+  width: 115px;
+  height: 1px;
+  margin: 27px auto;
+  background: #c5a06a;
+}
+
+.gold-line span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  padding: 0 9px;
+  background: var(--cream);
+  color: #a9824c;
+  transform: translate(-50%, -50%);
+}
+
+.love-message {
+  max-width: 350px;
+  margin: auto;
+  font-size: 17px;
+  line-height: 1.9;
+}
+
+.card-section {
+  margin-top: 38px;
+}
+
+.card-section h2 {
+  margin: 9px 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 36px;
+  font-weight: 400;
+  color: #825a3b;
+}
+
+.body-copy {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #795e46;
+}
+
+.date-section {
+  padding: 23px 0;
+  border-top: 1px solid #d9c29e;
+  border-bottom: 1px solid #d9c29e;
+}
+
+.mini-flower {
+  margin-bottom: 10px;
+  color: #b38a52;
+  font-size: 25px;
+}
+
+.event-date {
+  margin-top: 9px;
+  font-size: 19px;
+  letter-spacing: .7px;
+  color: #674832;
+}
+
+/* COUNTDOWN */
 
 .countdown {
   display: flex;
   justify-content: center;
-  gap: 12px;
-  margin: 22px 0;
+  align-items: center;
+  gap: clamp(5px, 2vw, 13px);
+  margin: 24px auto 5px;
 }
 
-.time-box {
-  width: 67px;
-  padding: 12px 3px;
-  border: 1px solid #c7a574;
-  background: #fff9ef;
+.time-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: clamp(52px, 15vw, 72px);
+  min-height: 73px;
+  padding: 9px 3px;
+  border: 1px solid #c6a16b;
+  border-radius: 38px 38px 7px 7px;
+  background: linear-gradient(180deg, #fff9ee, #edddc3);
+  box-shadow: 0 4px 12px #72502b0d;
 }
 
-.time-box span {
+.time-unit span {
+  font-size: clamp(23px, 6vw, 30px);
+  line-height: 1.15;
+  color: #805a39;
+  font-variant-numeric: tabular-nums;
+}
+
+.time-unit small {
+  margin-top: 6px;
+  font-family: Arial, sans-serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: #8e704e;
+}
+
+.time-colon {
+  color: #bd965f;
+  font-size: 21px;
+  transform: translateY(-5px);
+}
+
+/* CEREMONY */
+
+.ceremony-section {
+  margin-top: 38px;
+}
+
+.detail-block {
+  margin-top: 24px;
+}
+
+.detail-icon {
   display: block;
-  font-size: 27px;
-  color: #79543c;
+  margin-bottom: 8px;
+  font-size: 24px;
+  color: #b28a51;
 }
 
-.time-box small {
+.detail-title {
   font-size: 10px;
-  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8b6a46;
+}
+
+.ceremony-hour {
+  margin-top: 7px;
+  font-size: 34px;
+  color: #8a623e;
   letter-spacing: 1px;
 }
 
-.location-card {
-  margin-top: 15px;
-  padding: 18px 10px;
-  border-top: 1px solid #d4bc98;
-  border-bottom: 1px solid #d4bc98;
+.location-name {
+  margin: 9px 0 5px;
+  font-size: 21px;
+  color: #684831;
 }
 
-.map-link {
+.map-button {
   display: inline-block;
   margin-top: 15px;
-  padding: 10px 23px;
-  color: #fff5df;
-  background: #694431;
+  padding: 11px 23px;
+  border: 1px solid #9d7748;
+  color: #fff5e3;
+  background: #64442f;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  letter-spacing: 1.8px;
   text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  transition: background .3s;
+  transition: background .25s, color .25s;
 }
 
-.map-link:hover {
-  background: #a47a49;
+.map-button:hover {
+  color: #563b2a;
+  background: #e4c99e;
 }
 
-.footer {
-  margin-top: 30px;
-  font-family: 'Great Vibes', cursive;
-  font-size: 29px;
-  color: #a27a48;
+.ending-divider {
+  margin-top: 36px;
+  margin-bottom: 18px;
 }
 
-.bottom-ornament {
-  margin-top: 25px;
+.thank-you {
+  font-size: 16px;
+  line-height: 1.8;
 }
 
-.reopen {
+.signature {
+  margin-top: 20px;
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: #99734a;
+}
+
+.signature-names {
+  margin-top: 7px;
+  font-family: "Great Vibes", cursive;
+  font-size: 34px;
+  color: #815b3b;
+}
+
+/* BACK BUTTON */
+
+.back-button {
   display: block;
-  margin: 28px auto 0;
-  padding: 10px 18px;
+  margin: 24px auto 0;
+  padding: 12px 19px;
+  color: #ead5b3;
   background: transparent;
-  border: 1px solid #b99a6b;
-  color: #694431;
+  border: 1px solid #ad8752;
   cursor: pointer;
 }
 
-@media (max-width: 390px) {
-  .paper {
-    padding: 38px 16px;
+.back-button:hover {
+  background: #ffffff0b;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 420px) {
+  .cover {
+    padding: 25px 27px;
+  }
+
+  .cover::before {
+    inset: 12px;
+  }
+
+  .cover::after {
+    inset: 18px;
+  }
+
+  .envelope {
+    height: 430px;
+    min-height: 350px;
+  }
+
+  .wax-seal {
+    width: 94px;
+    height: 94px;
+  }
+
+  .seal-flower {
+    font-size: 84px;
+  }
+
+  .card-content {
+    padding: 43px 19px 33px;
+  }
+
+  .card-corner {
+    font-size: 54px;
+  }
+
+  .invitation {
+    padding: 22px 10px 35px;
+  }
+
+  .invitation-intro {
+    font-size: 16px;
+  }
+
+  .love-message {
+    font-size: 16px;
   }
 
   .countdown {
-    gap: 7px;
+    gap: 5px;
   }
 
-  .time-box {
-    width: 60px;
+  .time-unit {
+    min-height: 67px;
   }
 
-  .message {
-    font-size: 16px;
+  .time-unit small {
+    font-size: 7px;
+    letter-spacing: .6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
   }
 }

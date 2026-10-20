@@ -1,40 +1,64 @@
 
-const intro = document.getElementById("intro");
+const cover = document.getElementById("cover");
 const invitation = document.getElementById("invitation");
-const envelope = document.getElementById("envelope");
-const reopen = document.getElementById("reopen");
 
-// Open the invitation
+const openButton = document.getElementById("openInvitation");
+const backButton = document.getElementById("backToEnvelope");
+
+// ----------------------------------
+// WEDDING SETTINGS
+// ----------------------------------
+
+// Example date and time in Kabul time.
+// Replace this with the real wedding date.
+const weddingDate = "2026-11-20T18:00:00+04:30";
+
+// Ceremony time shown on the invitation.
+const ceremonyTime = "6:00 PM";
+
+// ----------------------------------
+// OPEN THE INVITATION
+// ----------------------------------
+
+let isOpening = false;
+let countdownInterval = null;
+
 function openInvitation() {
-  if (intro.classList.contains("opening")) return;
+  if (isOpening) return;
 
-  intro.classList.add("opening");
+  isOpening = true;
+  cover.classList.add("opening");
 
-  setTimeout(() => {
-    intro.classList.add("hide");
-    invitation.classList.add("visible");
+  window.setTimeout(() => {
+    cover.classList.add("leaving");
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }, 1300);
+    window.setTimeout(() => {
+      cover.classList.add("hidden");
+
+      invitation.classList.add("visible");
+      invitation.setAttribute("aria-hidden", "false");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      isOpening = false;
+    }, 800);
+  }, 1100);
 }
 
-envelope.addEventListener("click", openInvitation);
+openButton.addEventListener("click", openInvitation);
 
-// Open using the keyboard
-envelope.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" || event.key === " ") {
-    event.preventDefault();
-    openInvitation();
-  }
-});
+// ----------------------------------
+// RETURN TO THE ENVELOPE
+// ----------------------------------
 
-// Return to the envelope
-reopen.addEventListener("click", () => {
+backButton.addEventListener("click", () => {
   invitation.classList.remove("visible");
-  intro.classList.remove("hide", "opening");
+  invitation.setAttribute("aria-hidden", "true");
+
+  cover.classList.remove("hidden", "opening", "leaving");
 
   window.scrollTo({
     top: 0,
@@ -42,57 +66,86 @@ reopen.addEventListener("click", () => {
   });
 });
 
-// Change this to your actual wedding date
-const weddingDate = new Date(
-  "2026-11-20T18:00:00+04:30"
-);
+// ----------------------------------
+// SET CEREMONY TIME
+// ----------------------------------
 
-const dateText = document.getElementById("eventDateText");
+document.getElementById("ceremonyTime").textContent =
+  ceremonyTime;
 
-if (!Number.isNaN(weddingDate.getTime())) {
-  dateText.textContent = weddingDate.toLocaleDateString(
+// ----------------------------------
+// COUNTDOWN
+// ----------------------------------
+
+const dateElement = document.getElementById("eventDate");
+
+const countdownElements = {
+  days: document.getElementById("days"),
+  hours: document.getElementById("hours"),
+  minutes: document.getElementById("minutes"),
+  seconds: document.getElementById("seconds")
+};
+
+const targetDate = new Date(weddingDate);
+
+function formatNumber(value) {
+  return String(value).padStart(2, "0");
+}
+
+function updateCountdown() {
+  if (Number.isNaN(targetDate.getTime())) {
+    dateElement.textContent = "Please set a valid wedding date";
+    return;
+  }
+
+  dateElement.textContent = targetDate.toLocaleDateString(
     "en-US",
     {
+      weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
       timeZone: "Asia/Kabul"
     }
   );
-}
 
-// Wedding countdown
-function updateCountdown() {
   const now = Date.now();
-  const difference = weddingDate.getTime() - now;
-
-  if (Number.isNaN(difference)) return;
+  const difference = targetDate.getTime() - now;
 
   if (difference <= 0) {
-    ["days", "hours", "minutes", "seconds"].forEach((id) => {
-      document.getElementById(id).textContent = "00";
-    });
+    countdownElements.days.textContent = "00";
+    countdownElements.hours.textContent = "00";
+    countdownElements.minutes.textContent = "00";
+    countdownElements.seconds.textContent = "00";
 
-    dateText.textContent = "Our special day has arrived!";
+    dateElement.textContent = "The wedding day has arrived!";
+    clearInterval(countdownInterval);
     return;
   }
 
-  const days = Math.floor(difference / 86400000);
-  const hours = Math.floor((difference / 3600000) % 24);
-  const minutes = Math.floor((difference / 60000) % 60);
-  const seconds = Math.floor((difference / 1000) % 60);
+  const days = Math.floor(
+    difference / (1000 * 60 * 60 * 24)
+  );
 
-  document.getElementById("days").textContent = days;
+  const hours = Math.floor(
+    (difference / (1000 * 60 * 60)) % 24
+  );
 
-  document.getElementById("hours").textContent =
-    String(hours).padStart(2, "0");
+  const minutes = Math.floor(
+    (difference / (1000 * 60)) % 60
+  );
 
-  document.getElementById("minutes").textContent =
-    String(minutes).padStart(2, "0");
+  const seconds = Math.floor(
+    (difference / 1000) % 60
+  );
 
-  document.getElementById("seconds").textContent =
-    String(seconds).padStart(2, "0");
+  countdownElements.days.textContent = days;
+  countdownElements.hours.textContent = formatNumber(hours);
+  countdownElements.minutes.textContent = formatNumber(minutes);
+  countdownElements.seconds.textContent = formatNumber(seconds);
 }
 
+// Start the countdown
 updateCountdown();
-setInterval(updateCountdown, 1000);
+
+countdownInterval = setInterval(updateCountdown, 1000);
